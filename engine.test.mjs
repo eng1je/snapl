@@ -1,0 +1,3 @@
+import assert from 'node:assert/strict';import {round,move,options} from '../js/engine.js';
+assert.deepEqual(options(6,[2,3,16]),[[16]]);assert.deepEqual(options(6,[2,3]),[[2,3]]);
+for(let n of [2,4])for(let k=0;k<200;k++){let s=round(n,11),steps=0;assert.equal(new Set([...s.deck,...s.table,...s.hands.flat()]).size,40);while(s.phase==='playing'){let c=s.hands[s.turn][0],t=options(c,s.table)[0]||[];move(s,s.turn,c,t);assert.equal(new Set([...s.deck,...s.table,...s.hands.flat(),...s.captured.flat()]).size,40);assert.ok(++steps<=36)}assert.equal(steps,36);assert.equal(s.captured.flat().length,40);assert.ok(s.totals.every(x=>x>=0))}console.log('400 simulated rounds passed (2 and 4 players)');
